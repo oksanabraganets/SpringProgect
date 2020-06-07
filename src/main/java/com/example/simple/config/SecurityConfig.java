@@ -37,14 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
     @Bean
-    public PasswordEncoder bcryptPasswordEncoder(){
-        return new BCryptPasswordEncoder();
+    public PasswordEncoder customPasswordEncoder(){
+        return new CustomPasswordEncoder();
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userService)
-                .passwordEncoder(bcryptPasswordEncoder());
+                .passwordEncoder(customPasswordEncoder());
     }
 
 }
