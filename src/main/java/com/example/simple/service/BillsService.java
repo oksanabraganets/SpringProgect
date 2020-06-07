@@ -37,7 +37,7 @@ public class BillsService {
                 .firstName(UserService.getCurrentUser().getFirstName())
                 .lastName(UserService.getCurrentUser().getLastName())
                 .bills(billRepository.findAllByUser(UserService.getCurrentUser().getId()))
-                .accounts(accountRepository.findAllByUser(UserService.getCurrentUser().getId()))
+                .accounts(null/*accountRepository.findAllByUser(UserService.getCurrentUser().getId())*/)
                 .build();
     }
 
