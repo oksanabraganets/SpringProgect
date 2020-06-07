@@ -2,13 +2,15 @@ package com.example.simple.entity;
 
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 
 @Entity
 @Table( name="user",
@@ -16,7 +18,7 @@ import javax.persistence.*;
 public class UserDAO {
     @Id
     @GeneratedValue (strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
+    @Column(name = "iduser", nullable = false)
     private Long id;
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -33,5 +35,29 @@ public class UserDAO {
     private String firstNameUA;
     @Column(name = "last_name_ua", nullable = false)
     private String lastNameUA;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(
+            name = "user_account_link",
+            joinColumns = @JoinColumn(name = "iduser", referencedColumnName = "iduser"),
+            inverseJoinColumns = @JoinColumn(name = "idaccount", referencedColumnName = "idaccount")
+    )
+    private Set<AccountDAO> accounts;
 
+    @Override
+    public String toString() {
+        return "UserDAO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", password='" + password + '\'' +
+                ", firstNameUA='" + firstNameUA + '\'' +
+                ", lastNameUA='" + lastNameUA + '\'' +
+                '}';
+    }
 }
