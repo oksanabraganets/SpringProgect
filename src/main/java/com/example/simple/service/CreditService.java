@@ -28,15 +28,16 @@ public class CreditService {
     }
 
     public CreditDTO getUserCredit(){
-        Optional<AccountDAO> credit  = accountRepository.findByIdAndType(
-                UserService.getCurrentUser().getId(),
-                AccountType.CREDIT);
-        return CreditDTO.builder()
-                .firstName(UserService.getCurrentUser().getFirstName())
-                .lastName(UserService.getCurrentUser().getLastName())
-                .creditExists(credit.isPresent())
-                .credit(credit.orElse(null))
-                .build();
+//        Optional<AccountDAO> credit  = accountRepository.findByIdAndType(
+//                UserService.getCurrentUser().getId(),
+//                AccountType.CREDIT);
+//        return CreditDTO.builder()
+//                .firstName(UserService.getCurrentUser().getFirstName())
+//                .lastName(UserService.getCurrentUser().getLastName())
+//                .creditExists(credit.isPresent())
+//                .credit(credit.orElse(null))
+//                .build();
+        return null;
     }
 
     public void requestCredit(LimitDTO limitDTO) throws TransferParameterException{
