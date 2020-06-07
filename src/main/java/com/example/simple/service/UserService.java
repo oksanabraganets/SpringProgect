@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -39,14 +39,14 @@ public class UserService implements UserDetailsService {
         this.transferRepository = transferRepository;
     }
 
-    public NameDTO getUserAccounts(){
+    public NameDTO getUserBaseInfo(){
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, LocaleService.getLocale());
         String date = df.format(new java.sql.Date(System.currentTimeMillis()));
         System.out.println(date);
         NameDTO nameDTO = NameDTO.builder()
                 .firstName(currentUser.getFirstName())
                 .lastName(currentUser.getLastName())
-                .accounts(accountRepository.findAllByUser(currentUser.getId()))
+                .accounts(new ArrayList<AccountDAO>(currentUser.getAccounts()))
                 .allAccounts(accountRepository.findAll())
                 .date(date)
                 .build();
@@ -54,10 +54,12 @@ public class UserService implements UserDetailsService {
         return nameDTO;
     }
 
-    @Override
+    @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         currentUser = userRepository.findByEmail(s).orElseThrow(
                 () -> new UsernameNotFoundException("Email " + s +" was not found."));
+        Set<AccountDAO> accounts = currentUser.getAccounts();
+        System.out.println(accounts);
 
         List<Role> roles = new ArrayList<>();
         roles.add(currentUser.getRole());
