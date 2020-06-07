@@ -28,7 +28,7 @@ public class UserNameController {
 
     @RequestMapping(value = "/names", method = RequestMethod.GET)
     public NameDTO getUserNames(){
-        return userService.getUserAccounts();
+        return userService.getUserBaseInfo();
     }
 
     @RequestMapping(value = "/transfer", method = RequestMethod.POST)
