@@ -16,10 +16,8 @@ import java.sql.Date;
 public class AccountDAO {
     @Id
     @GeneratedValue (strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
+    @Column(name = "idaccount", nullable = false)
     private Long id;
-    @Column(name = "user_id", nullable = false)
-    private Long user;
     @Column(name = "balance", nullable = false)
     private Long balance;
     @Column(name = "validity")
@@ -33,4 +31,6 @@ public class AccountDAO {
     private AccountType type;
     @Column(name = "credit_limit")
     private Long credit_limit;
+    @Column(name = "debt")
+    private Long debt;
 }
