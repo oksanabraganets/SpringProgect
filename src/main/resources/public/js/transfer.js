@@ -25,7 +25,7 @@ angular.module("transfer",[])
                     inputFromId.value = '';
                     inputToId.value = '';
                     inputAmount.value = '';
-
+                    window.location.reload(false);
                 },
                 (error) => {
                     resultMessageEl.style.color = 'red';
@@ -71,6 +71,19 @@ angular.module("transfer",[])
                      $http({
                          method: "GET",
                          url: "/locale/us"
+                     }).then(
+                         function(data){
+                            window.location.reload(false);
+                         },
+                         function(error){
+                             console.log("userCtrl error")
+                         }
+                     );
+                  }
+        $scope.logOut = function(){
+                     $http({
+                         method: "POST",
+                         url: "/logout"
                      }).then(
                          function(data){
                             window.location.reload(false);
