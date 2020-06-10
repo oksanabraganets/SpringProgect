@@ -42,11 +42,12 @@ public class UserService implements UserDetailsService {
     public NameDTO getUserBaseInfo(){
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, LocaleService.getLocale());
         String date = df.format(new java.sql.Date(System.currentTimeMillis()));
-        System.out.println(date);
+        currentUser = userRepository.findByEmail(currentUser.getEmail()).orElseThrow(
+                () -> new UsernameNotFoundException("Email " + currentUser.getEmail() +" was not found."));
         NameDTO nameDTO = NameDTO.builder()
                 .firstName(currentUser.getFirstName())
                 .lastName(currentUser.getLastName())
-                .accounts(new ArrayList<AccountDAO>(currentUser.getAccounts()))
+                .accounts(currentUser.getAccounts())
                 .allAccounts(accountRepository.findAll())
                 .date(date)
                 .build();
@@ -54,12 +55,9 @@ public class UserService implements UserDetailsService {
         return nameDTO;
     }
 
-    @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         currentUser = userRepository.findByEmail(s).orElseThrow(
                 () -> new UsernameNotFoundException("Email " + s +" was not found."));
-        Set<AccountDAO> accounts = currentUser.getAccounts();
-        System.out.println(accounts);
 
         List<Role> roles = new ArrayList<>();
         roles.add(currentUser.getRole());
