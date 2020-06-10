@@ -4,7 +4,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -45,7 +44,7 @@ public class UserDAO {
             joinColumns = @JoinColumn(name = "iduser", referencedColumnName = "iduser"),
             inverseJoinColumns = @JoinColumn(name = "idaccount", referencedColumnName = "idaccount")
     )
-    private Set<AccountDAO> accounts;
+    private List<AccountDAO> accounts;
 
     @Override
     public String toString() {
